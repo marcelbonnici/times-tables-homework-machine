@@ -3,8 +3,8 @@ import cv2
 import serial
 import pytesseract
 import re
-"""
-arduinoSerialData = serial.Serial('/dev/ttyACM0',9600)
+#"""
+arduinoSerialData = serial.Serial('/dev/ttyACM3',9600)
 
 cnt = 0
 
@@ -14,7 +14,7 @@ while cnt < 10:
         myData = arduinoSerialData.readline()
         #print myData
 
-        cap = cv2.VideoCapture(0) # video capture source camera (Here webcam of laptop)
+        cap = cv2.VideoCapture(2) # video capture source camera (Here webcam of laptop)
         ret,frame = cap.read() # return a single frame in variable `frame`
         cnt = cnt+1
         snapname = 'images/snap'+str(cnt)+'.png'
@@ -41,7 +41,7 @@ p9 = cv2.imread('images/snap9.png')
 p10 = cv2.imread('images/snap10.png')
 sheet = np.concatenate((p1, p2, p3, p4, p5, p6, p7, p8, p9, p10), axis=0)
 cv2.imwrite('images/sheet.png', sheet)
-"""
+#"""
 
 
 img = cv2.imread('images/sheet.png')
@@ -53,11 +53,12 @@ settings=r'--tessdata-dir "/home/marcelbonnici/Dropbox/000_LINUX/winterproject/t
 text = pytesseract.image_to_string(blackAndWhiteImage, config=settings)#config='--psm 6', lang='eng')
 bad = "=qwertyuopasdfghjkzcvbnm "
 boxes = pytesseract.image_to_boxes(blackAndWhiteImage, config=settings)
+"""
 for ch in range(len(bad)):
     text=text.replace(bad[ch], "")
 
 boxes=re.split('\n', boxes)
-"""
+
 ar=0
 boxold=boxes
 boxes=[]
@@ -69,8 +70,8 @@ for ar in range(len(boxold)):
 """
 print(text)
 print("---------------")
-print(boxes)
-print("---------------")
+#print(boxes)
+#print("---------------")
 for i in range(len(text)):
     if text[i] == "x" and text[i+1].isdigit() == True and text[i-1].isdigit() == True and i > 0:
         if text[i+1] == "1":
