@@ -1,10 +1,18 @@
+## Week 3:
+### Goal: Perfect the CV Readings
+
+What Was Accomplished: Created a work-in-progress algorithm that performs splicing better than concatenating fractions of a worksheet
+
+What Needs Improvement: The exemplary worksheet has 4 written like an upside-down "h", which tesseract cannot detect. To solve the issue, machine learning or training tesseract will likely be adopted.
+
+![Current Worksheet](https://drive.google.com/uc?id=1PPeljTDCaGpwQ9thuLyyd3U5yvDKxsEJ)
 ## Week 2:
 ### Goals:
-Weed out characters that do not matter (everything except numbers and x)
+a) Circuit Schematic
+![Schematic](https://drive.google.com/uc?id=1zkVi1hcIQvFpEZ9kJQ8lUu-UZ44Osxcb)
+b) Find where to write the answers and output to serial
 
-Calculate the products of the problems
-
-Find location of numbers and x signs
+c) Increase reading accuracy of math problems
 ## Week 1: The Prototype
 ### Goals:
 X Reassembling the prototype after transportation

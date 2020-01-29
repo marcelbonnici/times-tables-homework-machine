@@ -63,6 +63,8 @@ void loop(){
     sectroll();
     sectroll();
     sectroll();
+    sectroll(); //new starts here
+    sectroll();
     rollREV();
     rollREV();
     rollREV();
@@ -84,7 +86,7 @@ void roll(){
 
 void sectroll(){
     digitalWrite(rollDir, HIGH);
-    for(int i = 0; i < 66; i++){
+    for(int i = 0; i < 54; i++){ //was 66
       digitalWrite(rollStep, HIGH);
       delay(1);
       digitalWrite(rollStep, LOW);
