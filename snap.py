@@ -1,22 +1,49 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import division
 import numpy as np
 import cv2
 import serial
 import pytesseract
 import re
+import os
+def splice():
+    path, dirs, files = next(os.walk("/home/marcelbonnici/Dropbox/000_LINUX/winterproject/limages"))
+    upper = cv2.imread('limages/snap1.png')
+
+    upper = cv2.cvtColor(upper, cv2.COLOR_BGR2GRAY)
+    (thresh, upper) = cv2.threshold(upper, 110, 255, cv2.THRESH_BINARY)
+    for k in range(1, len(files)-1): #for each slice
+        address='limages/snap'+str(k+1)+'.png'
+        lower=cv2.imread(address) #newest pic is lower, previous stuff is upper
+        lower = cv2.cvtColor(lower, cv2.COLOR_BGR2GRAY)
+        (thresh, lower) = cv2.threshold(lower, 90, 255, cv2.THRESH_BINARY) #B&W
+        match=0
+        candidates=[]
+        for j in range(0, 24): #for height
+            for i in range(0, 640): #for width
+                if np.any(upper[len(upper)-24+j, i]==lower[j, i]) and np.any(lower[j, i]==[255, 255, 255]): #if a pixel between the 25 last of upper and 25 first of lower are both white
+                    match=match+1 #keep tally of how many matching whites are in each row
+            candidates.append(match)
+            match=0 #once the white pixel tally is saved, clear match for next row
+        biggest=candidates.index(max(candidates)) #index of most similar row of the overlapping pictures
+        upper=upper[:len(upper)-24+biggest] #change the endpoint of the upper to the index where best row is
+        lower=lower[biggest:]
+        sheet = np.concatenate((upper, lower), axis=0)
+        upper=sheet
+        cv2.imwrite('limages/splice.png', sheet)
 """
-arduinoSerialData = serial.Serial('/dev/ttyACM0',9600)
+arduinoSerialData = serial.Serial('/dev/ttyACM1',9600)
 
 cnt = 0
 
-while cnt < 19:
+while cnt < 12: #11
     if (arduinoSerialData.inWaiting()>0):
 
         myData = arduinoSerialData.readline()
         #print myData
 
-        cap = cv2.VideoCapture(2) # video capture source camera (Here webcam of laptop)
+        cap = cv2.VideoCapture(3) # video capture source camera (Here webcam of laptop)
         ret,frame = cap.read() # return a single frame in variable `frame`
         cnt = cnt+1
         snapname = 'limages/snap'+str(cnt)+'.png'
@@ -28,9 +55,9 @@ while cnt < 19:
         cv2.imwrite(snapname, frame)
         #cv2.destroyAllWindows()
         cap.release()
+"""
 
-
-
+"""
 p1 = cv2.imread('limages/snap1.png')
 p2 = cv2.imread('limages/snap2.png')
 p3 = cv2.imread('limages/snap3.png')
@@ -47,17 +74,17 @@ sheet = np.concatenate((p1, p2, p3, p4, p5, p6, p7, p8, p9, p10), axis=0)
 cv2.imwrite('limages/sheet.png', sheet)
 """
 
+#splice()
 font = cv2.FONT_HERSHEY_SIMPLEX
-img = cv2.imread('limages/splice.png')
-#img = img[0:100, 125:275]
+img = cv2.imread('ylimages/splice.png')
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 (thresh, blackAndWhiteImage) = cv2.threshold(gray, 110, 255, cv2.THRESH_BINARY)
-#good = str(qwertyuopasdfghjkzcvbnm')
+
 blackAndWhiteImage=cv2.cvtColor(blackAndWhiteImage,cv2.COLOR_GRAY2BGR)
 
 
 
-settings=r'--tessdata-dir "/home/marcelbonnici/Dropbox/000_LINUX/winterproject/tessdata" -l eng --oem 0 --psm 6 -c tessedit_char_whitelist=0123456789x=Tqwertyuopasdfghjkzcvbnm~ ' #կ
+settings=r'--tessdata-dir "/home/marcelbonnici/Dropbox/000_LINUX/winterproject/tessdata" -l eng --oem 0 --psm 1 -c tessedit_char_whitelist=0123456789x=Tqwertyuopasdfghjkzcvbnm~ ' #կ
 text = pytesseract.image_to_string(blackAndWhiteImage, config=settings)
 bad = "qwertyuopasdfghjkzcvbnm~ " #qwertyuopasdfghjkzcvbnm~
 boxes = pytesseract.image_to_boxes(blackAndWhiteImage, config=settings)
@@ -81,7 +108,7 @@ for z in range(0, len(boxes)-1):
 
         ratio=(y2-y1)/(x2-x1) #how big y pixelage is compared to x pixelage
 
-        if subb[0]=="x" and (boxes[z-1][0]).isdigit()==True and (boxes[z+1][0]).isdigit()==True and x2 < int(boxes[z+1].rsplit(None,5)[1]) and x2+50 > int(boxes[z+1].rsplit(None,5)[1]) and x1 > int(boxes[z-1].rsplit(None,5)[3]) and x1-50 < int(boxes[z-1].rsplit(None,5)[3]) and ratio>0.5 and ratio<2:
+        if subb[0]=="x" and (boxes[z-1][0]).isdigit()==True and (boxes[z+1][0]).isdigit()==True and x2 < int(boxes[z+1].rsplit(None,5)[1]) and x2+100 > int(boxes[z+1].rsplit(None,5)[1]) and x1 > int(boxes[z-1].rsplit(None,5)[3]) and x1-100 < int(boxes[z-1].rsplit(None,5)[3]) and ratio>0.5 and ratio<2:
             #if detechted character is an "x" and the previous and following detected characters are #s and left side of x is within 50 pixels of right side of following number and the number isn't too wide and isn't too skinny
             cv2.putText(blackAndWhiteImage, str(subb[0]), (x1,len(img)-y1), font, 1, (0, 255, 0), 2, cv2.LINE_AA) #write "x" on top of where it is detected
             if boxes[z+1][0] == "1": #if following number is a 1
@@ -124,8 +151,8 @@ if len(eloc)==0: #if no equal signs were detected, assume the product is semi-am
 elif len(eloc)%2==1: #if an odd number of equal signs were detected
     eoffset=eloc[int(len(eloc)/2)] #offset=median value
 else: #if even number of equal signs detected
-    eoffset=abs(int((eloc[len(eloc)/2]+eloc[(len(eloc)/2)-1])/2)) #offset=median value
-eoffset=eoffset+70 #semi-ambiguously add 40 pixels to each offset
+    eoffset=abs(int((eloc[int(len(eloc)/2)]+eloc[int((len(eloc)/2)-1)])/2)) #offset=median value
+eoffset=eoffset+40 #semi-ambiguously add 40 pixels to each offset
 for wr in range(0, len(product)): #for the number of the assumed products to calculate
     answerx=xs[wr]+eoffset # the x-coordinate of the answer is immediately to the left of the last printed number plus the offset
     answery=len(img)-ys[wr] # the y-coordinate of the answer is the lower y-coordinate of the multipliciation sign

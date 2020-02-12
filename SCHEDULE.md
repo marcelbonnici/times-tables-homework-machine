@@ -1,3 +1,56 @@
+## Week 5:
+### Goals:
+#### a) Read the A4988 (stepper driver) datasheet
+MS1 to MS3: Leaving these three microstep selection pins disconnected results in full-step mode (setting certain ones high allows ½, ¼, ⅛ and 1/16 stepping)
+
+1A-2B: The 1’s are one coil, The 2’s are another coil
+
+VDD & GND: Fueled by Arduino’s 5V and GND, respectively
+
+VMOT & Nearby GND: Connect to motor power supply; capacitor smooths out voltage spikes
+
+DIR & STEP: DIR determines CCW or CW rotation, Arduino sends a pulse for each microstep
+
+SLEEP: Minimizes power consumption when motor is not in use
+
+RESET: Resets pin to predefined home state (SLEEP brings it high, enabling the board)
+
+ENABLE: Left at “0”; disabled if set HIGH
+Operates from 8 – 35V and can deliver up to 2A per coil
+
+Short-to-ground and shorted-load protection
+
+The current must actively be limited to under 1A to prevent damage to the motor
+
+#### b) Redo the Schematic
+![Schematic](https://drive.google.com/uc?id=1vQ-Yz2gtWRwMnAk3NjZ9Q9aPLeRKemZP)
+
+#### c) Revamp the solderless breadboard to a soldered board
+![Solderless](https://drive.google.com/uc?id=12tXcYpsLQCcfG5BND59r_yeJiCRXaZJO)
+
+#### d) Non-LEGO Build
+Elevation of rollers either causes slippage or (less commonly) is low enough where the motor shaft cannot move.
+
+Video Summary: https://youtu.be/PJKJnOjDxVc
+
+## Week 4:
+### Goals:
+#### a) Check accuracy of flagged 4's
+Indeed, Tesseract can read flagged 4's well but not unflagged 4's
+![Flagged 4's Success](https://drive.google.com/uc?id=126Fyc8H01b-a1vnNVNpYV-1rghVIIxss)
+
+#### b) CAD Model
+Finished designing
+![CAD Model](https://drive.google.com/uc?id=1hhevIHauUj8ufHCcS13pJPmuBcdY5emo)
+
+#### c) Improve Accuracy of Readings
+i) My code for detecting which of Tesseract’s sensed values matter remains effective, but the library is worse with detecting 2 problems per line (even when cropped)
+
+ii) Marginally better when changing the page segmentation method.
+
+iii) Should I stick with only “one-problem-per-line” worksheets?
+![Side-by-side](https://drive.google.com/uc?id=1ZkzxihR2bQ4MYTbb1v_0sxfjb63OXOiN)
+
 ## Week 3:
 ### Goal: Perfect the CV Readings
 
