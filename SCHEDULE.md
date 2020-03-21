@@ -7,7 +7,7 @@
 ### Final Touches
 As mentioned in week 8, breaking a double stranded chain was expected to be difficult. It was achieved with the unexpected but crucial help of a vise, and the machine was assembled to mechanical perfection.
 
-Unfortunately, everything went downhill from here. Soldering the second and third motors looked like a smooth experience, but running the Arduino code revealed that the first motor always worked, the second rarely worked, and the hird one never worked. The investigative skills of Joshau Cohen also found no apparent issues, besides my NEMA17 motors getting hotter than he knew those motors could. I am accustomed to the motors' heat from passion projects, so I doubt that led to the irresponsive motors.
+Unfortunately, everything went downhill from here. Soldering the second and third motors looked like a smooth experience, but running the Arduino code revealed that the first motor always worked, the second rarely worked, and the third one never worked. The investigative skills of Joshua Cohen also found no apparent issues, besides my NEMA17 motors getting hotter than he knew those motors could. I am accustomed to the motors' heat from passion projects, so I doubt that led to the irresponsive motors.
 
 Meanwhile, cancellations regarding COVID-19 were intensifying to the point where the lab was closed the day after. I shockingly took no photos of my mechanical pen mechanism, but will gladly do so during the spring quarter if requested to.
 
@@ -171,7 +171,7 @@ The machine works as follows. First, a user places a worksheet by the wheels, wh
 
 The Arduino IDE is limited, so it is exclusively programmed to suck a paper in a fixed distance and write seven segment numbers depending on which functions are called. For instance, four digits of my friend's number were written by calling functions `number5();`, `number3();`, `number1();` and `number9();` in succession.
 
-The python code listens to the Arduino's serial messages as queues of when to take photos, which are used to concatenate different scans into a digital worksheet. The image is passed through Tesseract, an image-to-text ibrary, that detects numbers and "x" characters, per my requirements. Early, promising signs of the multiplication were presented!
+The python code listens to the Arduino's serial messages as queues of when to take photos, which are used to concatenate different scans into a digital worksheet. The image is passed through Tesseract, an image-to-text library, that detects numbers and "x" characters, per my requirements. Early, promising signs of the multiplication were presented!
 
 ![Scanned Worksheet](README-images/firstscan.png)
 
