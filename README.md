@@ -1,20 +1,17 @@
 # Times Tables Homework Machine
 ### You wish we were friends in third grade...
----
 This project aims to combine mechatronics and computer vision to solve multiplication homework. The hardware is accomplished with an Arduino microcontroller and its IDE, while serial communication invites Tesseract, an image-to-text transcription library, and OpenCV to identify math expressions to generate answers.
 
 The concept of "times tables", where third grade students solve multiplication problems of whole numbers inclusively between 0 and 12, makes the machine's simple math capability more purposeful.
 
 ## Motivation
----
 As a roboticist, comparing human capabilities to an engineered system is an exciting notion. A homework robot that is proficient in one math domain, times tables, demonstrates the basic purpose while respecting the project's ten-week deadline.
 
 ## Video Demonstration
----
-[![The Baxter Builder](README-images/tthumb.png)](https://youtu.be/Hddqjd6f_dk "Baxter")
+[Click Here to Watch](https://youtu.be/Hddqjd6f_dk)
+[![Homework Machine](README-images/tthumb.png)](https://youtu.be/Hddqjd6f_dk "HW Machine")
 
 ## Hardware
----
 The homework machine requires the following components:
 * [Arduino UNO](https://store.arduino.cc/usa/arduino-uno-rev3)
 * [Electronics Component Kit (5mm white LED x2, push button x1, 330Ω resistor x2, 10kΩ resistor x1, 100µF capacitor, wires)](https://www.amazon.com/REXQualis-Electronics-tie-Points-Breadboard-Potentiometer/dp/B073ZC68QG/ref=sr_1_9?dchild=1&keywords=rexqualis+arduino+kit&qid=1584594090&sr=8-9)
